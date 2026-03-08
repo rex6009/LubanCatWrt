@@ -1,3 +1,10 @@
+CONFIG_VERSION_DIST="LubanCatWrt"
+CONFIG_VERSION_MANUFACTURER="EmbedFire"
+CONFIG_VERSION_MANUFACTURER_URL="https://embedfire.com"
+CONFIG_VERSION_PRODUCT="LubanCat"
+CONFIG_VERSION_HOME_URL="https://github.com/rex6009/LubanCatWrt"
+CONFIG_VERSION_SUPPORT_URL="https://github.com/rex6009/LubanCatWrt/issues"
+CONFIG_VERSION_BUG_URL="https://github.com/rex6009/LubanCatWrt/issues"
 CONFIG_TARGET_rockchip=y
 CONFIG_TARGET_rockchip_armv8=y
 CONFIG_TARGET_MULTI_PROFILE=y

@@ -1,5 +1,9 @@
 ![OpenWrt logo](include/logo.png)
 
+**LubanCatWrt** is a custom OpenWrt-based firmware for the [LubanCat](https://embedfire.com) family of
+Rockchip SBC development boards (RK3568, RK3588, etc.), maintained at
+<https://github.com/rex6009/LubanCatWrt>.
+
 OpenWrt Project is a Linux operating system targeting embedded devices. Instead
 of trying to create a single, static firmware, OpenWrt provides a fully
 writable filesystem with package management. This frees you from the
@@ -9,7 +13,45 @@ For developers, OpenWrt is the framework to build an application without having
 to build a complete firmware around it; for users this means the ability for
 full customization, to use the device in ways never envisioned.
 
-Sunshine!
+## 验证固件与源码的对应关系 / Verifying firmware ↔ source
+
+Every LubanCatWrt image has a **revision string** baked in at build time that
+encodes the exact git commit used to produce it.  On a running device:
+
+```sh
+# 查看固件版本信息 / Show firmware version info
+cat /etc/openwrt_release
+```
+
+You will see output like:
+
+```
+DISTRIB_ID='LubanCatWrt'
+DISTRIB_RELEASE='24.10-SNAPSHOT'
+DISTRIB_REVISION='r12345-abc1234567'   # <-- git info
+DISTRIB_TARGET='rockchip/armv8'
+DISTRIB_ARCH='aarch64_generic'
+DISTRIB_DESCRIPTION='LubanCatWrt 24.10-SNAPSHOT r12345-abc1234567'
+```
+
+The `DISTRIB_REVISION` field uses the format `r<count>-<short-hash>`, where
+`<short-hash>` is the abbreviated git commit SHA of the source tree that was
+compiled.  To confirm the match in this repository run:
+
+```sh
+# 在源码目录下 / In the source tree
+git log --oneline | head -10
+# 或精确查找 / or look up the exact commit
+git show abc1234567
+```
+
+Additional build metadata is available via:
+
+```sh
+cat /etc/os-release        # BUILD_ID, HOME_URL, SUPPORT_URL, …
+cat /etc/device_info       # DEVICE_MANUFACTURER, DEVICE_PRODUCT, …
+uname -a                   # kernel version / build timestamp
+```
 
 ## Download
 
