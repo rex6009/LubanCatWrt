@@ -17,6 +17,17 @@ try_git() {
 
 	[ -n "$GET_REV" ] || GET_REV="HEAD"
 
+	# When REBOOT base is not reachable (e.g. shallow clone or independent fork),
+	# fall back to counting all commits reachable from HEAD so that the revision
+	# reads r<N>-<hash> instead of the misleading r0-<hash>.
+	if ! git cat-file -e "$REBOOT" 2>/dev/null; then
+		HEAD_HASH="$(git log -n 1 --format="%h" HEAD)"
+		REV="$(git rev-list --count HEAD 2>/dev/null)"
+		REV="${REV:+r$REV-$HEAD_HASH}"
+		[ -n "$REV" ]
+		return
+	fi
+
 	case "$GET_REV" in
 	r*)
 		GET_REV="$(echo $GET_REV | tr -d 'r')"
